@@ -26,6 +26,7 @@ const typeDefs = `
 
     type Query {
         getProduct(id: ID!): Product
+        getProducts: [Product]
     }
 
     input ProductInput {

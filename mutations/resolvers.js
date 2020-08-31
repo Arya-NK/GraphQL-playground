@@ -24,6 +24,13 @@ export const resolvers = {
         getProduct: (root, { id }) => {
             return new Product(id, productDatabase[id]);
         },
+        getProducts: (root) => {
+            let products = [];
+            for (let key in productDatabase) {
+                products.push(new Product(key, productDatabase[key]));
+            }
+            return products;
+        },
     },
     Mutation: {
         createProduct: (root, { input }) => {
@@ -37,9 +44,12 @@ export const resolvers = {
             return new Product(input.id, input);
         },
         deleteProduct: (root, { id }) => {
-            delete productDatabase[id];
-            console.log(productDatabase);
-            return "Success";
+            if (productDatabase[id]) {
+                delete productDatabase[id];
+                return "Success";
+            } else {
+                return "Id doesnt exist"
+            }
         }
     },
 };
